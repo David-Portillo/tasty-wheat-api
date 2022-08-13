@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/David-Portillo/tasty-wheat-api/issues"
   },
-  "homepage": "https://github.com/David-Portillo/tasty-wheat-api#readme"
+  "homepage": "https://github.com/David-Portillo/tasty-wheat-api#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
