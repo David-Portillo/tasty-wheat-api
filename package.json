@@ -1,0 +1,19 @@
+{
+  "name": "tasty-wheat-api",
+  "version": "1.0.0",
+  "description": "NodeJS Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/David-Portillo/tasty-wheat-api.git"
+  },
+  "author": "David Portillo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/David-Portillo/tasty-wheat-api/issues"
+  },
+  "homepage": "https://github.com/David-Portillo/tasty-wheat-api#readme"
+}
