@@ -1,4 +1,5 @@
 import express from "express";
+import connectDB from "../config/db";
 
 const app = express();
 
@@ -8,6 +9,10 @@ app.get("/", (req, res) => {
   res.status(200);
   res.send("Welcome to Tasty Wheat API");
 });
+
+// connect to mongoDB
+
+connectDB();
 
 app.listen(PORT, () => {
   console.log(`Server successfully running and listening on port ${PORT}`);
