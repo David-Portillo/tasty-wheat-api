@@ -1,6 +1,6 @@
 {
-  "watch": ["server"],
+  "watch": ["server", "config"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "ts-node ./server/index.ts"
+  "exec": "ts-node -r dotenv/config ./server/index.ts"
 }
