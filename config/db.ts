@@ -9,7 +9,7 @@ const connectDB = async (): Promise<void> => {
     })
     .catch((reason: Error) => {
       console.log(
-        "an error occurred when attemting to connect to DB",
+        "an error occurred when attempting to connect to DB",
         "reason: ",
         reason
       );
