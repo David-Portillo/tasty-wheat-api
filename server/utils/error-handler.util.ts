@@ -1,6 +1,6 @@
 import { mongo } from "mongoose";
 
-type ErrorCodeType = 500 | 200;
+type ErrorCodeType = 500;
 
 interface Exception {
   status: ErrorCodeType;
