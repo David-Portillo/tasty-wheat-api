@@ -1,4 +1,4 @@
-import { mongo } from "mongoose";
+import { Error, mongo } from "mongoose";
 
 type ErrorCodeType = 500;
 
@@ -14,6 +14,13 @@ export const handleException = (e: any): Exception => {
     // dup key error collection
     if (e.code === 11000) {
       exception.message = "sorry, user already exists";
+    }
+  }
+
+  // mongo casting error
+  else if (e instanceof Error.CastError) {
+    if (e.kind === "ObjectId") {
+      exception.message = "that doesn't seem right";
     }
   }
 
