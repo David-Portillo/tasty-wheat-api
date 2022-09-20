@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   password: {
     type: String,
     required: [true, "Please add a password"],
@@ -37,7 +41,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-// encrypt password using HMAC
+// before saving encrypt password using HMAC
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
