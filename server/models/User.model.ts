@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, UpdateQuery } from "mongoose";
 import crypto, { CipherGCMTypes, CipherKey } from "crypto";
 
 const UserSchema = new mongoose.Schema({
@@ -39,25 +39,6 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
-
-// before saving encrypt password using HMAC
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
-  }
-
-  const algorithm: CipherGCMTypes = "aes-256-gcm";
-  const iv: Buffer = Buffer.alloc(16, 0);
-  const securityKey: CipherKey = crypto.randomBytes(32);
-
-  const cipher = crypto.createCipheriv(algorithm, securityKey, iv);
-
-  let encryptedPassword = cipher.update(this.password, "utf8", "hex");
-
-  encryptedPassword += cipher.final("hex");
-
-  this.password = encryptedPassword;
 });
 
 export default mongoose.model("User", UserSchema);

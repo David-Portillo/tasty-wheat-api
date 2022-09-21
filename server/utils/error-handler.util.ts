@@ -21,6 +21,8 @@ export const handleException = (e: any): Exception => {
   else if (e instanceof Error.CastError) {
     if (e.kind === "ObjectId") {
       exception.message = "that doesn't seem right";
+    } else if (e.kind === "Boolean") {
+      exception.message = e.message;
     }
   }
 
