@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { QueryOptions } from "mongoose";
 import User from "../models/User.model";
-import { handleErrorResponse } from "../utils/error-response.util";
-import { MyRequest } from "../utils/interfaces.util";
+import { handleErrorResponse } from "../utils/error-handling/error-response.util";
+import { Req } from "../utils/interfaces.util";
 
 export const registerUser = async function (
-  req: MyRequest,
+  req: Req,
   res: Response
 ): Promise<void> {
   const data = { ...req.sanitizedUser };
@@ -34,14 +34,18 @@ export const getUser = async function (req: Request, res: Response) {
   }
 };
 
-export const updateUser = async function (req: MyRequest, res: Response) {
+export const updateUser = async function (req: Req, res: Response) {
   try {
     const { id } = req.params;
     const data = { ...req.sanitizedUser };
     const queryOptions: QueryOptions = { new: true, runValidators: true };
     await User.findByIdAndUpdate(
       id,
-      { disabled: data.disabled, password: data.password },
+      {
+        disabled: data.disabled,
+        password: data.password,
+        username: data.username,
+      },
       queryOptions
     );
     res.status(200).json({ message: "user successfully updated" });

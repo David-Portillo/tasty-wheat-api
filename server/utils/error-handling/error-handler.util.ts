@@ -1,6 +1,7 @@
 import { Error, mongo } from "mongoose";
+import CustomError from "./CustomError.utils";
 
-type ErrorCodeType = 500;
+type ErrorCodeType = 500 | 404;
 
 interface Exception {
   status: ErrorCodeType;
@@ -20,10 +21,16 @@ export const handleException = (e: any): Exception => {
   // mongo casting error
   else if (e instanceof Error.CastError) {
     if (e.kind === "ObjectId") {
+      exception.status = 404;
       exception.message = "that doesn't seem right";
     } else if (e.kind === "Boolean") {
       exception.message = e.message;
     }
+  }
+
+  // custom error message handling
+  else if (e instanceof CustomError) {
+    exception.message = e.message;
   }
 
   // generic error message handling

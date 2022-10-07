@@ -1,10 +1,10 @@
 import express from "express";
 import { registerUser } from "../controllers/authentication.controller";
-import sanitizeUser from "../middlewares/sanatize-user-body.middleware";
-import transformFields from "../middlewares/transform-user-fields.middleware";
+import { sanitizeUser } from "../middlewares/user-sanitizer.middleware";
+import { validateUserBody } from "../middlewares/user-validator.middleware";
 
 const authRouter = express.Router();
 
-authRouter.post("/register", sanitizeUser, transformFields, registerUser);
+authRouter.post("/register", validateUserBody, sanitizeUser, registerUser);
 
 export default authRouter;
