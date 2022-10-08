@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { QueryOptions } from "mongoose";
 import User from "../models/User.model";
 import { handleErrorResponse } from "../utils/error-handling/error-response.util";
-import { Req } from "../utils/interfaces.util";
+import { Req } from "../utils/customization/custom-request.util";
 
 export const registerUser = async function (
   req: Req,

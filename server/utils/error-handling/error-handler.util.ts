@@ -1,14 +1,18 @@
 import { Error, mongo } from "mongoose";
-import CustomError from "./CustomError.utils";
+import {
+  CustomError,
+  ValidatorError,
+} from "../customization/custom-error.util";
 
 type ErrorCodeType = 500 | 404;
 
 interface Exception {
   status: ErrorCodeType;
   message: string;
+  details: string | string[] | undefined;
 }
 export const handleException = (e: any): Exception => {
-  const exception: Exception = { status: 500, message: "" };
+  const exception: Exception = { status: 500, message: "", details: undefined };
 
   // mongo DB error handling
   if (e instanceof mongo.MongoError) {
@@ -26,6 +30,12 @@ export const handleException = (e: any): Exception => {
     } else if (e.kind === "Boolean") {
       exception.message = e.message;
     }
+  }
+
+  // body validation handling
+  else if (e instanceof ValidatorError) {
+    exception.message = e.message;
+    exception.details = e.errors.map((error) => error.msg);
   }
 
   // custom error message handling

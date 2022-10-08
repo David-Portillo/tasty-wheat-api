@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { encryptPassword } from "../utils/encryption.util";
 import { handleErrorResponse } from "../utils/error-handling/error-response.util";
-import { Req } from "../utils/interfaces.util";
+import { Req } from "../utils/customization/custom-request.util";
 
 export const sanitizeUser = function (
   req: Req,
