@@ -1,5 +1,5 @@
-import mongoose, { Schema, UpdateQuery } from "mongoose";
-import crypto, { CipherGCMTypes, CipherKey } from "crypto";
+import mongoose, { InferSchemaType } from "mongoose";
+import jwt from "jsonwebtoken";
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -41,4 +41,12 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("User", UserSchema);
+UserSchema.methods.getSignedJwtToken = function (): string {
+  return jwt.sign({ id: this._id }, "thisismysecret", { expiresIn: "30 days" });
+};
+
+export declare interface IUser extends InferSchemaType<typeof UserSchema> {
+  getSignedJwtToken(): string;
+}
+
+export default mongoose.model<IUser>("User", UserSchema);

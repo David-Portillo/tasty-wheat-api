@@ -32,7 +32,7 @@ export const handleException = (e: any): Exception => {
     }
   }
 
-  // body validation handling
+  // validation error handling
   else if (e instanceof ValidatorError) {
     exception.message = e.message;
     exception.details = e.errors.map((error) => error.msg);

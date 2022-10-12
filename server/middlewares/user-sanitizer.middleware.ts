@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import { encryptPassword } from "../utils/encryption.util";
+import { encrypt } from "../utils/helpers.util";
 import { handleErrorResponse } from "../utils/error-handling/error-response.util";
 import { Req } from "../utils/customization/custom-request.util";
 
@@ -13,7 +13,7 @@ export const sanitizeUser = function (
     const { username, email, password, role } = req.body;
 
     if (password) {
-      encryptedPassword = encryptPassword(password);
+      encryptedPassword = encrypt(password);
     }
 
     req.sanitizedUser = {
