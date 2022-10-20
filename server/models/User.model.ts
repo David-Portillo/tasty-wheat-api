@@ -42,7 +42,9 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.getSignedJwtToken = function (): string {
-  return jwt.sign({ id: this._id }, "thisismysecret", { expiresIn: "30 days" });
+  const secret = process.env.JWT_SECRET ?? "";
+  const expires = process.env.JWT_EXPIRE ?? "";
+  return jwt.sign({ id: this._id }, secret, { expiresIn: expires });
 };
 
 export declare interface IUser extends InferSchemaType<typeof UserSchema> {

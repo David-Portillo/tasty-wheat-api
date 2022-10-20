@@ -1,7 +1,6 @@
 import crypto, { CipherGCMTypes, CipherKey } from "crypto";
 import { CookieOptions } from "express";
-import { InferSchemaType } from "mongoose";
-import User, { IUser } from "../models/User.model";
+import { IUser } from "../models/User.model";
 
 export const encrypt = (password: string): string => {
   const algorithm: CipherGCMTypes = "aes-256-gcm";
@@ -15,7 +14,7 @@ export const encrypt = (password: string): string => {
   return encryptedPassword;
 };
 
-export const token = (
+export const jwtToken = (
   user: IUser
 ): { signedToken: string; cookieOpts: CookieOptions } => {
   const signedToken = user.getSignedJwtToken();

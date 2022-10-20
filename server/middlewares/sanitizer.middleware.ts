@@ -3,7 +3,7 @@ import { encrypt } from "../utils/helpers.util";
 import { handleErrorResponse } from "../utils/error-handling/error-response.util";
 import { Req } from "../utils/customization/custom-request.util";
 
-export const sanitizeUser = function (
+export const sanitizeUserBody = function (
   req: Req,
   res: Response,
   next: NextFunction
@@ -19,7 +19,7 @@ export const sanitizeUser = function (
     req.sanitizedUser = {
       username,
       email,
-      password: encryptedPassword,
+      password,
       role,
     };
 
