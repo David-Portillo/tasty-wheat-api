@@ -1,7 +1,7 @@
 import express from "express";
 import connectDB from "../config/db";
-import authRouter from "./routes/authentication.route";
-import userRouter from "./routes/admin/users.route";
+import usersRouter from "./routes/users.route";
+import adminRouter from "./routes/admin/users.admin.route";
 
 const app = express();
 
@@ -18,8 +18,11 @@ app.use(express.json()); // body parser
 
 // mount routers
 
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", userRouter);
+// mount users router
+app.use("/api/v1/users", usersRouter);
+
+// mount admin router
+app.use("/api/v1/admin", adminRouter);
 
 app.listen(PORT, () => {
   console.log(`Server successfully running and listening on port ${PORT}`);

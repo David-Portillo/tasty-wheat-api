@@ -1,10 +1,23 @@
+import { Response } from "express";
 import { Error as MongooseError, mongo } from "mongoose";
-import {
-  CustomError,
-  ValidatorError,
-} from "../customization/custom-error.util";
 
-type ErrorCodeType = 500 | 404;
+import { ValidationError } from "express-validator";
+import { ErrorCodeType } from "./helper-constants.util";
+
+export class CustomError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+export class ValidatorError extends Error {
+  errors: ValidationError[];
+
+  constructor(message: string, errors: ValidationError[]) {
+    super(message);
+    this.errors = errors;
+  }
+}
 
 interface Exception {
   status: ErrorCodeType;
@@ -55,4 +68,9 @@ export const handleException = (e: any): Exception => {
   }
 
   return exception;
+};
+
+export const handleErrorResponse = (e: any, res: Response): void => {
+  const exception = handleException(e);
+  res.status(exception.status).json(exception);
 };
