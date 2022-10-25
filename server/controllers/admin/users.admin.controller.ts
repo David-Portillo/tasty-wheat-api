@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import { QueryOptions } from "mongoose";
 import User from "../../models/User.model";
 import { handleErrorResponse } from "../../utils/error-response-handling.util";
-import { encrypt } from "../../utils/helper-methods.util";
+import { encryptInput } from "../../utils/helper-methods.util";
 
 export const createUser = async function (req: Request, res: Response): Promise<void> {
   const { password, ...rest } = req.body;
 
   let encryptedPassword: string = "";
   if (password) {
-    encryptedPassword = encrypt(password);
+    encryptedPassword = encryptInput(password);
   }
 
   try {
@@ -38,7 +38,7 @@ export const updateUser = async function (req: Request, res: Response) {
 
     let encryptedPassword: string = "";
     if (password) {
-      encryptedPassword = encrypt(password);
+      encryptedPassword = encryptInput(password);
     }
     const user = await User.findByIdAndUpdate(id, { password: encryptedPassword, ...rest }, queryOptions);
     res.status(200).json({ user });
