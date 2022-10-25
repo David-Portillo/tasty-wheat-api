@@ -1,18 +1,17 @@
 import mongoose from "mongoose";
+import { CustomError, handleException } from "../server/utils/error-response-handling.util";
 
 const connectDB = async (): Promise<void> => {
-  console.log("awaiting DB connection response");
+  if (!process.env?.MONGO_URI) {
+    throw new CustomError("mongo uri is undefined");
+  }
   await mongoose
-    .connect(process.env?.MONGO_URI ?? "")
+    .connect(process.env.MONGO_URI)
     .then((values) => {
       console.log(`mongoDB connected ${values.connection.host}`);
     })
-    .catch((reason: Error) => {
-      console.log(
-        "an error occurred when attempting to connect to DB",
-        "reason: ",
-        reason
-      );
+    .catch((e: Error) => {
+      console.error(handleException(e));
     });
 };
 
