@@ -5,8 +5,10 @@ import { ValidationError } from "express-validator";
 import { ErrorCodeType } from "./helper-constants.util";
 
 export class CustomError extends Error {
-  constructor(message: string) {
+  errorCode: ErrorCodeType;
+  constructor(message: string, errorCode: ErrorCodeType = 500) {
     super(message);
+    this.errorCode = errorCode;
   }
 }
 
@@ -35,7 +37,13 @@ export const handleException = (e: any): Exception => {
     }
   }
 
-  // mongoose casting error
+  // mongoose connection error handling
+  else if (e instanceof MongooseError.MongooseServerSelectionError) {
+    exception.message = "connection timedout";
+    exception.details = e.message;
+  }
+
+  // mongoose casting error handling
   else if (e instanceof MongooseError.CastError) {
     if (e.kind === "ObjectId") {
       exception.status = 404;
@@ -49,6 +57,7 @@ export const handleException = (e: any): Exception => {
   else if (e instanceof MongooseError.ValidationError) {
     exception.message = e.message;
     exception.details = e.errors;
+    exception.status = 400;
   }
 
   // express-validator validation error handling
@@ -60,6 +69,7 @@ export const handleException = (e: any): Exception => {
   // custom error message handling
   else if (e instanceof CustomError) {
     exception.message = e.message;
+    exception.status = e.errorCode;
   }
 
   // generic error message handling
