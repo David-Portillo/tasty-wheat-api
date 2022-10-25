@@ -11,4 +11,4 @@ enum HttpMethod {
 }
 
 export type HttpMethodStrings = keyof typeof HttpMethod;
-export type ErrorCodeType = 500 | 404;
+export type ErrorCodeType = 500 | 404 | 401 | 400;
